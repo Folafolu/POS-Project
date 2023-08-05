@@ -16,28 +16,23 @@ public class AddProductPanel extends JPanel implements ActionListener {
     JButton back_button = new JButton();
 
     AddProductPanel(){
-        hide_Frame1();
+        hide_Panel1();
 
         product_name.setText("Product Name");
         product_name.setBounds(430,80,140,20);
-        product_name.setBackground(Color.black);
         product_name.setForeground(Color.black);
-        product_name.setVisible(true);
 
         product_price.setText("Price");
         product_price.setBounds(300,150,140,20);
-        product_price.setBackground(Color.black);
         product_price.setForeground(Color.black);
-        product_price.setVisible(true);
 
         product_quantity.setText("Quantity");
         product_quantity.setBounds(600,150,140,20);
-        product_quantity.setBackground(Color.black);
         product_quantity.setForeground(Color.black);
-        product_quantity.setVisible(true);
 
+        add_product_panel.setBounds(200,0,600,400); //200,0,600,400
         add_product_panel.setBackground(Color.white);
-        add_product_panel.setBounds(200,0,600,400);
+
 
         product_name_text.setBounds(390,100,170,28);
         product_price_text.setBounds(270,170,100, 28);
@@ -69,7 +64,6 @@ public class AddProductPanel extends JPanel implements ActionListener {
         Frame1.frame.add(add_button);
         Frame1.frame.add(back_button);
         Frame1.frame.add(add_product_panel);
-        Frame1.frame.setVisible(true);
 
     }
 
@@ -77,27 +71,28 @@ public class AddProductPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back_button){
             hide_AddProductPanel();
-            show_Frame1();
+            show_Panel1();
         }
         else if (e.getSource() == add_button){
             hide_AddProductPanel();
-            show_Frame1();
+            show_Panel1();
         }
     }
 
-    public void hide_Frame1(){
-        Frame1.panel.setVisible(false);
-        Frame1.button.setVisible(false);
-        Frame1.button1.setVisible(false);
-        Frame1.button2.setVisible(false);
-        Frame1.table.setVisible(false);
+    public void hide_Panel1(){
+        Panel1.panel1.setVisible(false);
+        Panel1.button.setVisible(false);
+        Panel1.button1.setVisible(false);
+        Panel1.button2.setVisible(false);
+        Panel1.table.setVisible(false);
     }
-    public void show_Frame1(){
-        Frame1.panel.setVisible(true);
-        Frame1.button.setVisible(true);
-        Frame1.button1.setVisible(true);
-        Frame1.button2.setVisible(true);
-        Frame1.table.setVisible(true);
+    public void show_Panel1(){
+        Panel1.button.setVisible(true);
+        Panel1.button1.setVisible(true);
+        Panel1.button2.setVisible(true);
+        Panel1.table.setVisible(true);
+        Panel1.panel1.setVisible(true);
+
     }
     public void hide_AddProductPanel(){
         product_name.setVisible(false);
