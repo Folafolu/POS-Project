@@ -18,6 +18,7 @@ public class Frame1 extends JFrame implements ActionListener {
     static ResultSet resultSet;
     static Product product;
     static ArrayList<Product> product_list;
+    int delete_prod_no;
 
 
     static JFrame frame = new JFrame();
@@ -46,13 +47,44 @@ public class Frame1 extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == button){
+        if (e.getSource() == button){ // Add Product Button
             System.out.println("h");
             frame.add(new AddProductPanel());
-        } else if (e.getSource() == button1) {
+        } else if (e.getSource() == button1) { // Edit Button
             System.out.println("o");
-        } else if (e.getSource() == button2) {
+            JOptionPane.showInputDialog("Enter the Product no. 'To Edit'");
+        } else if (e.getSource() == button2) { // Delete Button
             System.out.println("t");
+            delete_prod_no = Integer.parseInt(JOptionPane.showInputDialog("Enter the Product no 'To Delete'"));
+            try {
+                // delete the row that matches with the entered product number
+                String del_sql_query = "DELETE FROM products WHERE Product_no = " + delete_prod_no;
+                statement = connection.createStatement();
+                statement.execute(del_sql_query);
+
+                // reset the ordering of the product number
+                String jdbcURL = "jdbc:mysql://localhost:3306/db_sql_tutorial";
+                String username = "fola";
+                String password = "fola";
+                try (Connection connection = DriverManager.getConnection(jdbcURL,username,password)){
+                    try (Statement statement = connection.createStatement()){
+                        String setUserVariable = "SET @autoid :=0;"; statement.executeUpdate(setUserVariable);
+                        String updateProductsTable = "UPDATE products set Product_no = @autoid := (@autoid+1);"; statement.executeUpdate(updateProductsTable);
+                        String resetAutoIncrement = "ALTER table products AUTO_INCREMENT = 1;"; statement.executeUpdate(resetAutoIncrement);
+                    }
+                }
+            } catch (SQLException ex) {throw new RuntimeException(ex);}
+
+            // clear the old table, connect and display the new database
+            try {
+                while (model.getRowCount() > 1){
+                    model.removeRow(1);
+                }
+                create_connection();
+                display_products();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
