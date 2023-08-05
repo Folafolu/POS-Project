@@ -10,37 +10,47 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class POS_class {
-    Frame1 myFrame = new Frame1();
+    //Frame1 myFrame = new Frame1();
+//    static Connection connection;
+//
+//    static Statement statement;
+//    static ResultSet resultSet;
+
+    public POS_class() throws SQLException {
+    }
 
 
     public static void main(String[] args) throws IOException, SQLException {
 
-        String jdbcURL = "jdbc:mysql://localhost:3306/db_sql_tutorial";
-        String username = "fola";
-        String password = "fola";
+//        String jdbcURL = "jdbc:mysql://localhost:3306/db_sql_tutorial";
+//        String username = "fola";
+//        String password = "fola";
+//
+//        connection = DriverManager.getConnection(jdbcURL,username,password);
+//
+//        //String sql = "INSERT INTO customers(customer_id, first_name, last_name, country, score) ";
+//
+//        statement = connection.createStatement();
+//        resultSet = statement.executeQuery("SELECT * FROM products");
 
-        Connection connection = DriverManager.getConnection(jdbcURL,username,password);
-
-        //String sql = "INSERT INTO customers(customer_id, first_name, last_name, country, score) ";
-
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM customers");
-
-        //while (resultSet.next()){
-            //System.out.println(resultSet.getString(2));
-        //}
-
-        ResultSetMetaData rsmd = resultSet.getMetaData();
-        DefaultTableModel model = new DefaultTableModel();
-
-
-        resultSet.next();
+//        while (resultSet.next()){
+//            Jtable_Sql_connection.product = new Product(resultSet.getInt(1),resultSet.getString(2),
+//                    resultSet.getInt(3), (int) resultSet.getFloat(4));
+//            Jtable_Sql_connection.product_list.add(Jtable_Sql_connection.product);
+//        }
 
 
+//        ResultSetMetaData rsmd = resultSet.getMetaData();
+//        DefaultTableModel model = new DefaultTableModel();
+//
+//
+//        resultSet.next();
 
-        String[][] data = {{resultSet.getString(2), "First Name", "Last Name"},
-                {"1", "Fola", "Idris"}};
-        String[] col = {"Id", "first name","last name"};
+
+
+//        String[][] data = {{resultSet.getString(2), "First Name", "Last Name"},
+//                {"1", "Fola", "Idris"}};
+//        String[] col = {"Id", "first name","last name"};
 
 
         Frame1 myFrame1 = new Frame1();
