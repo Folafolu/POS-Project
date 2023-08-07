@@ -12,7 +12,10 @@ public class Panel1 extends JPanel implements ActionListener {
     static ResultSet resultSet;
     static Product product;
     static ArrayList<Product> product_list;
-    int delete_prod_no;
+    int delete_prod_no_int;
+    String delete_prod_no_string;
+    int edit_prod_no_int;
+    String edit_prod_no_string;
     static JButton button = new JButton();
     static JButton button1 = new JButton();
     static JButton button2 = new JButton();
@@ -36,39 +39,51 @@ public class Panel1 extends JPanel implements ActionListener {
             Frame1.frame.add(new AddProductPanel());
         } else if (e.getSource() == button1) { // Edit Button
             System.out.println("o");
-            JOptionPane.showInputDialog("Enter the Product no. 'To Edit'");
+            edit_prod_no_string = JOptionPane.showInputDialog("Enter the Product no. 'To Edit'");
+            if (edit_prod_no_string != null){
+                edit_prod_no_int = Integer.parseInt(edit_prod_no_string); // do sth with this var (use it to prefill the textfields)
+                Frame1.frame.add(new EditProductPanel());
+            }
+
         } else if (e.getSource() == button2) { // Delete Button
             System.out.println("t");
-            delete_prod_no = Integer.parseInt(JOptionPane.showInputDialog("Enter the Product no 'To Delete'"));
-            try {
-                // delete the row that matches with the entered product number
-                String del_sql_query = "DELETE FROM products WHERE Product_no = " + delete_prod_no;
-                statement = connection.createStatement();
-                statement.execute(del_sql_query);
+            delete_prod_no_string = JOptionPane.showInputDialog("Enter the Product no 'To Delete'");
+            if (delete_prod_no_string != null){
+                delete_prod_no_int = Integer.parseInt(delete_prod_no_string);
 
-                // reset the ordering of the product number
-                String jdbcURL = "jdbc:mysql://localhost:3306/db_sql_tutorial";
-                String username = "fola";
-                String password = "fola";
-                try (Connection connection = DriverManager.getConnection(jdbcURL,username,password)){
-                    try (Statement statement = connection.createStatement()){
-                        String setUserVariable = "SET @autoid :=0;"; statement.executeUpdate(setUserVariable);
-                        String updateProductsTable = "UPDATE products set Product_no = @autoid := (@autoid+1);"; statement.executeUpdate(updateProductsTable);
-                        String resetAutoIncrement = "ALTER table products AUTO_INCREMENT = 1;"; statement.executeUpdate(resetAutoIncrement);
+                try {
+                    // delete the row that matches with the entered product number
+                    String del_sql_query = "DELETE FROM products WHERE Product_no = " + delete_prod_no_int;
+                    statement = connection.createStatement();
+                    statement.execute(del_sql_query);
+
+                    // reset the ordering of the product number
+                    String jdbcURL = "jdbc:mysql://localhost:3306/db_sql_tutorial";
+                    String username = "fola";
+                    String password = "fola";
+                    try (Connection connection = DriverManager.getConnection(jdbcURL,username,password)){
+                        try (Statement statement = connection.createStatement()){
+                            String setUserVariable = "SET @autoid :=0;"; statement.executeUpdate(setUserVariable);
+                            String updateProductsTable = "UPDATE products set Product_no = @autoid := (@autoid+1);"; statement.executeUpdate(updateProductsTable);
+                            String resetAutoIncrement = "ALTER table products AUTO_INCREMENT = 1;"; statement.executeUpdate(resetAutoIncrement);
+                        }
                     }
-                }
-            } catch (SQLException ex) {throw new RuntimeException(ex);}
+                } catch (SQLException ex) {throw new RuntimeException(ex);}
 
-            // clear the old table, connect and display the new database
-            try {
-                while (model.getRowCount() > 1){
-                    model.removeRow(1);
+                // clear the old table, connect and display the new database
+                try {
+                    while (model.getRowCount() > 1){
+                        model.removeRow(1);
+                    }
+                    create_connection();
+                    display_products();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
                 }
-                create_connection();
-                display_products();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+
             }
+
+
         }
 
     }
