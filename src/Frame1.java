@@ -9,6 +9,7 @@ public class Frame1 extends JFrame implements ActionListener {
     static JLabel add_product_label = new JLabel();
     static JLabel sales_and_order_label = new JLabel();
     static JLabel manage_customers_label = new JLabel();
+
     ImageIcon icon1 =new ImageIcon( new ImageIcon("gear.png").getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
     ImageIcon icon2 =new ImageIcon( new ImageIcon("more.png").getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
     ImageIcon icon3 =new ImageIcon( new ImageIcon("package-box.png").getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
@@ -23,7 +24,8 @@ public class Frame1 extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {}
 
     public void show_table_view() throws SQLException {
-        Panel1 panel1 = new Panel1();
+        Panel1 panel = new Panel1();
+
 
         add_product_label.setText("Add Product");
         add_product_label.setBounds(20,50,170,20);
@@ -88,11 +90,6 @@ public class Frame1 extends JFrame implements ActionListener {
         frame.getContentPane().setBackground(new Color(235,235,244));
         frame.setVisible(true);
 
-        frame.add(Panel1.button);
-        frame.add(Panel1.button1);
-        frame.add(Panel1.button2);
-        frame.add(Panel1.table);
-        frame.add(Panel1.panel1);
         frame.add(place_order_label);frame.add(add_product_label);frame.add(sales_and_order_label);frame.add(manage_customers_label);
     }
 

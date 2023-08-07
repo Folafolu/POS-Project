@@ -35,11 +35,14 @@ public class Panel1 extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button){ // Add Product Button
+            AddandRemovePanels.remove_Panel1();
+            new AddProductPanel();
             System.out.println("h");
-            Frame1.frame.add(new AddProductPanel());
         } else if (e.getSource() == button1) { // Edit Button
             System.out.println("o");
             edit_prod_no_string = JOptionPane.showInputDialog("Enter the Product no. 'To Edit'");
+            AddandRemovePanels.remove_Panel1(); // Remove Panel1
+
             if (edit_prod_no_string != null){
                 edit_prod_no_int = Integer.parseInt(edit_prod_no_string); // do sth with this var (use it to prefill the textfields)
                 Frame1.frame.add(new EditProductPanel());
@@ -80,12 +83,8 @@ public class Panel1 extends JPanel implements ActionListener {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-
             }
-
-
         }
-
     }
 
     public void show_Panel1() throws SQLException {
@@ -122,6 +121,7 @@ public class Panel1 extends JPanel implements ActionListener {
         panel1.setBounds(200,0,600,400);
 
 
+
         table = new JTable(model);
         model.addColumn("Col1");
         model.addColumn("Col2");
@@ -130,6 +130,14 @@ public class Panel1 extends JPanel implements ActionListener {
         model.addRow(product_column_headers);
         table.setBounds(220,100, 530, 200);
         display_products();
+
+
+        Frame1.frame.add(button);
+        Frame1.frame.add(button1);
+        Frame1.frame.add(button2);
+        Frame1.frame.add(table);
+        Frame1.frame.add(panel1);
+
 
     }
 

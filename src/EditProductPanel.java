@@ -6,19 +6,18 @@ import java.awt.event.ActionListener;
 
 public class EditProductPanel extends JPanel implements ActionListener {
 
-    JPanel edit_product_panel = new JPanel();
-    JLabel product_name = new JLabel();
-    JLabel product_price = new JLabel();
-    JLabel product_quantity = new JLabel();
-    JLabel edit_product_label = new JLabel();
-    JTextField product_name_text = new JTextField();
-    JTextField product_price_text = new JTextField();
-    JTextField product_quantity_text = new JTextField();
-    JButton save_button = new JButton();
-    JButton back_button = new JButton();
+    static JPanel edit_product_panel = new JPanel();
+    static JLabel product_name = new JLabel();
+    static JLabel product_price = new JLabel();
+    static JLabel product_quantity = new JLabel();
+    static JLabel edit_product_label = new JLabel();
+    static JTextField product_name_text = new JTextField();
+    static JTextField product_price_text = new JTextField();
+    static JTextField product_quantity_text = new JTextField();
+    static JButton save_button = new JButton();
+    static JButton back_button = new JButton();
 
     EditProductPanel(){
-        hide_Panel1();
 
         edit_product_label.setText("Edit Product");
         edit_product_label.setBounds(410,30,200,40);
@@ -74,45 +73,18 @@ public class EditProductPanel extends JPanel implements ActionListener {
         Frame1.frame.add(save_button);
         Frame1.frame.add(back_button);
         Frame1.frame.add(edit_product_panel);
+        Frame1.frame.repaint();
 
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back_button){
-            hide_EditProductPanel();
-            show_Panel1();
+            AddandRemovePanels.remove_EditProductPanel();
+            AddandRemovePanels.add_Panel1();
         }else if (e.getSource() == save_button){
-            hide_EditProductPanel();
-            show_Panel1();
+            AddandRemovePanels.remove_EditProductPanel();
+            AddandRemovePanels.add_Panel1();
         }
-    }
-
-    public void hide_Panel1(){
-        Panel1.panel1.setVisible(false);
-        Panel1.button.setVisible(false);
-        Panel1.button1.setVisible(false);
-        Panel1.button2.setVisible(false);
-        Panel1.table.setVisible(false);
-    }
-    public void show_Panel1(){
-        Panel1.button.setVisible(true);
-        Panel1.button1.setVisible(true);
-        Panel1.button2.setVisible(true);
-        Panel1.table.setVisible(true);
-        Panel1.panel1.setVisible(true);
-
-    }
-    public void hide_EditProductPanel(){
-        product_name.setVisible(false);
-        product_price.setVisible(false);
-        product_quantity.setVisible(false);
-        edit_product_label.setVisible(false);
-        product_name_text.setVisible(false);
-        product_price_text.setVisible(false);
-        product_quantity_text.setVisible(false);
-        back_button.setVisible(false);
-        save_button.setVisible(false);
-        edit_product_panel.setVisible(false);
     }
 
     // The below code makes textfield gray
