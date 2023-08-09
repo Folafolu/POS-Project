@@ -60,4 +60,22 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.remove(EditProductPanel.edit_product_panel);
         Frame1.frame.repaint();
     }
+
+    public static void remove_PlaceOrderPanels(){
+        Frame1.frame.remove(PlaceOrderPanels.product_name_label);
+        Frame1.frame.remove(PlaceOrderPanels.product_quantity_label);
+        Frame1.frame.remove(PlaceOrderPanels.product_price_label);
+        Frame1.frame.remove(PlaceOrderPanels.add_to_cart_button);
+        Frame1.frame.remove(PlaceOrderPanels.comboBox);
+        Frame1.frame.remove(PlaceOrderPanels.price_label);
+        Frame1.frame.remove(PlaceOrderPanels.product_quantity_textfield);
+        Frame1.frame.remove(PlaceOrderPanels.order_list_name);
+        Frame1.frame.remove(PlaceOrderPanels.order_list_quantity);
+        Frame1.frame.remove(PlaceOrderPanels.order_list_price);
+        Frame1.frame.remove(PlaceOrderPanels.clear_order_list_button);
+        Frame1.frame.remove(PlaceOrderPanels.checkout_button);
+        Frame1.frame.remove(PlaceOrderPanels.place_order_panel_top);
+        Frame1.frame.remove(PlaceOrderPanels.place_order_panel_bottom);
+        Frame1.frame.repaint();
+    }
 }
