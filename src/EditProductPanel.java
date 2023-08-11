@@ -3,6 +3,7 @@ import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class EditProductPanel extends JPanel implements ActionListener {
@@ -82,11 +83,14 @@ public class EditProductPanel extends JPanel implements ActionListener {
         if (e.getSource() == back_button){
             AddandRemovePanels.remove_EditProductPanel();
             AddandRemovePanels.add_Panel1();
+
+
         }else if (e.getSource() == save_button){
             try {
                 String edit_sql_query = "UPDATE products SET Name =" + "'" + product_name_text.getText().substring(0,product_name_text.getText().length()) + "'" + ", Quantity = " + Integer.parseInt(product_quantity_text.getText()) + ", Price = "+ Integer.valueOf(product_price_text.getText()) +" WHERE Product_no = " + Panel1.edit_prod_no_int;
                 Panel1.statement = Panel1.connection.createStatement();
-                Panel1.statement.execute(edit_sql_query);
+                Panel1.statement.executeUpdate(edit_sql_query);
+
             }catch (SQLException ex){
                 throw new RuntimeException(ex);
             }
@@ -103,7 +107,8 @@ public class EditProductPanel extends JPanel implements ActionListener {
 
             AddandRemovePanels.remove_EditProductPanel();
             AddandRemovePanels.add_Panel1();
-        }
+            }
+
     }
 
     // The below code makes textfield gray

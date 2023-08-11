@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.sql.SQLException;
 
 public class AddandRemovePanels extends JPanel {
     public AddandRemovePanels() {
@@ -12,7 +13,7 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.remove(Panel1.table);
         Frame1.frame.repaint();
     }
-    public static void add_Panel1(){
+    public static void add_Panel1() {
         Frame1.frame.add(Panel1.button);
         Frame1.frame.add(Panel1.button1);
         Frame1.frame.add(Panel1.button2);
@@ -30,6 +31,9 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.remove(AddProductPanel.product_quantity_text);
         Frame1.frame.remove(AddProductPanel.back_button);
         Frame1.frame.remove(AddProductPanel.add_button);
+        AddProductPanel.product_name_text.setText(null);
+        AddProductPanel.product_quantity_text.setText(null);
+        AddProductPanel.product_price_text.setText(null);
         Frame1.frame.remove(AddProductPanel.add_product_panel);
         Frame1.frame.repaint();
     }
