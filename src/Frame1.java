@@ -26,7 +26,6 @@ public class Frame1 extends JFrame implements ActionListener {
     public void show_table_view() throws SQLException {
         Panel1 panel = new Panel1();
 
-
         add_product_label.setText("Add Product");
         add_product_label.setBounds(20,50,170,20);
         add_product_label.setIcon(icon2);
@@ -39,6 +38,19 @@ public class Frame1 extends JFrame implements ActionListener {
                 place_order_label.setForeground(Color.black);
                 sales_and_order_label.setForeground(Color.black);
                 manage_customers_label.setForeground(Color.black);
+
+                // Remove all panels that might be on screen
+                AddandRemovePanels.remove_EditProductPanel();
+                AddandRemovePanels.remove_AddProductPanel();
+                AddandRemovePanels.remove_PlaceOrderPanels();
+
+                // Go back the previous state of Panel1
+                Frame1.frame.add(Panel1.button);
+                Frame1.frame.add(Panel1.button1);
+                Frame1.frame.add(Panel1.button2);
+                Frame1.frame.add(Panel1.table);
+                Frame1.frame.add(Panel1.panel1);
+
             }
             @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
         });
@@ -52,7 +64,19 @@ public class Frame1 extends JFrame implements ActionListener {
                 add_product_label.setForeground(Color.black);
                 place_order_label.setForeground(Color.blue);
                 sales_and_order_label.setForeground(Color.black);
-                manage_customers_label.setForeground(Color.black);}
+                manage_customers_label.setForeground(Color.black);
+
+                // Remove all panels that might be on screen
+                AddandRemovePanels.remove_EditProductPanel();
+                AddandRemovePanels.remove_Panel1();
+                AddandRemovePanels.remove_AddProductPanel();
+
+                try {new PlaceOrderPanels();
+                } catch (SQLException ex) {throw new RuntimeException(ex);
+                }
+            }
+
+
             @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
         });
 
