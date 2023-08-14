@@ -19,31 +19,25 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
     static JLabel product_price_label = new JLabel();
     ArrayList<Product> product_list_combo_box;
     static JComboBox comboBox;
-    static JLabel order_list_name = new JLabel();
-    static JLabel order_list_quantity = new JLabel();
-    static JLabel order_list_price = new JLabel();
+//    static JLabel order_list_name = new JLabel();
+//    static JLabel order_list_quantity = new JLabel();
+//    static JLabel order_list_price = new JLabel();
     static JTextField product_quantity_textfield = new JTextField();
     static JButton add_to_cart_button = new JButton();
     static JButton clear_order_list_button = new JButton();
     static JButton checkout_button = new JButton();
     static JLabel price_label  = new JLabel();
     ArrayList order_history_array = new ArrayList<>();
-
-
+    static JLabel total_order_cost_label = new JLabel();
+    static JLabel total_order_cost_amount = new JLabel();
     static int order_list_buffer = 0;
-    JLabel temp_product_name;
-    JLabel temp_product_quantity;
-    JLabel temp_product_price;
+    String customers_name;
     public PlaceOrderPanels() throws SQLException {
         show_place_order_panels();
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        //if(e.getSource() == add_to_cart_button){
-
-        //}
-    }
+    public void actionPerformed(ActionEvent e) {}
 
     public void show_place_order_panels() throws SQLException {
         // top panel
@@ -68,6 +62,12 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
         comboBox = new JComboBox<>();
         comboBox.setBounds(220,60,100,25);
         refresh_combo_box();
+
+        total_order_cost_label.setText("Total: $"); total_order_cost_amount.setText("0.00");
+        total_order_cost_label.setBounds(220,310,100,25);total_order_cost_amount.setBounds(288,310,100,25);
+        total_order_cost_label.setFont(new Font(total_order_cost_label.getFont().getFontName(),Font.BOLD,18));
+        total_order_cost_amount.setFont(new Font(total_order_cost_amount.getFont().getFontName(),Font.BOLD,18));
+
 
         product_quantity_textfield.setBounds(380,60,40,25);
 
@@ -108,11 +108,16 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
                 order_list_buffer = 0;
 
                 order_history_array.add(comboBox.getSelectedItem());order_history_array.add(product_quantity_textfield.getText());order_history_array.add(price_label.getText());
+                // calculate the total order cost
+                total_order_cost_amount.setText(Float.toString(Float.parseFloat(total_order_cost_amount.getText()) + Float.parseFloat(price_label.getText().substring(1))));
+
+                // print out the order list added to cart
                 for (int i = 0; i< order_history_array.size(); i+=3){
                     AddandRemovePanels.remove_PlaceOrderPanels();
                     Frame1.frame.add(new JLabel(order_history_array.get(i).toString())).setBounds(220,160 + order_list_buffer,130,20);
                     Frame1.frame.add(new JLabel(order_history_array.get(i+1).toString())).setBounds(380,160 + order_list_buffer,30,20);
                     Frame1.frame.add(new JLabel(order_history_array.get(i+2).toString())).setBounds(470,160 + order_list_buffer,50,20);
+
                     AddandRemovePanels.add_PlaceOrderPanels();
                     Frame1.frame.repaint();
                     order_list_buffer += 20;
@@ -157,7 +162,12 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
         clear_order_list_button.setMargin(new Insets(0,0,0,0));
 
         checkout_button.setBounds(660,310,70,25);
-        checkout_button.addActionListener(this);
+        checkout_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                customers_name = JOptionPane.showInputDialog(null,"Enter First & Last name to submit your order","Checkout", JOptionPane.OK_OPTION);
+            }
+        });
         checkout_button.setText("Checkout");checkout_button.setFocusable(false);
         checkout_button.setBackground(new Color(0,49,113));
         checkout_button.setFont(new Font(checkout_button.getFont().getFontName(),Font.BOLD,10));
@@ -169,6 +179,7 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
         Frame1.frame.add(product_name_label);Frame1.frame.add(product_quantity_label);Frame1.frame.add(product_price_label);
         Frame1.frame.add(add_to_cart_button); Frame1.frame.add(comboBox); Frame1.frame.add(product_quantity_textfield);
         Frame1.frame.add(price_label); Frame1.frame.add(checkout_button); Frame1.frame.add(clear_order_list_button);
+        Frame1.frame.add(total_order_cost_label);Frame1.frame.add(total_order_cost_amount);
         //Frame1.frame.add(order_list_name);Frame1.frame.add(order_list_quantity);Frame1.frame.add(order_list_price);
         Frame1.frame.add(place_order_panel_top);
         Frame1.frame.add(place_order_panel_bottom);
