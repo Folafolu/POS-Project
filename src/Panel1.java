@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Panel1 extends JPanel implements ActionListener {
+    static boolean Panel_is_visible;
     static Connection connection;
     static Statement statement;
     static ResultSet resultSet;
@@ -30,6 +31,7 @@ public class Panel1 extends JPanel implements ActionListener {
 
     public Panel1() throws SQLException {
         show_Panel1();
+        Panel_is_visible = true;
     }
 
     @Override
@@ -180,7 +182,7 @@ public class Panel1 extends JPanel implements ActionListener {
     }
 
     public void main(String[] args) throws SQLException {
-        this.show_Panel1();
+        //this.show_Panel1();
     }
 
 }

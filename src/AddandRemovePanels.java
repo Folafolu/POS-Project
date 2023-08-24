@@ -11,6 +11,7 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.remove(Panel1.button1);
         Frame1.frame.remove(Panel1.button2);
         Frame1.frame.remove(Panel1.table);
+        Panel1.Panel_is_visible = false;
         Frame1.frame.repaint();
     }
     public static void add_Panel1() {
@@ -19,6 +20,7 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.add(Panel1.button2);
         Frame1.frame.add(Panel1.table);
         Frame1.frame.add(Panel1.panel1);
+        Panel1.Panel_is_visible = true;
         Frame1.frame.repaint();
     }
     public static void remove_AddProductPanel(){
@@ -35,6 +37,7 @@ public class AddandRemovePanels extends JPanel {
         AddProductPanel.product_quantity_text.setText(null);
         AddProductPanel.product_price_text.setText(null);
         Frame1.frame.remove(AddProductPanel.add_product_panel);
+        AddProductPanel.Add_Product_Panel_is_visible = false;
         Frame1.frame.repaint();
     }
     public static void add_AddProductPanel(){
@@ -48,6 +51,7 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.add(AddProductPanel.back_button);
         Frame1.frame.add(AddProductPanel.add_button);
         Frame1.frame.add(AddProductPanel.add_product_panel);
+        AddProductPanel.Add_Product_Panel_is_visible = true;
         Frame1.frame.repaint();
     }
 
@@ -62,6 +66,7 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.remove(EditProductPanel.back_button);
         Frame1.frame.remove(EditProductPanel.save_button);
         Frame1.frame.remove(EditProductPanel.edit_product_panel);
+        EditProductPanel.Edit_Product_Panel_is_visible = false;
         Frame1.frame.repaint();
     }
 
@@ -82,6 +87,7 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.remove(PlaceOrderPanels.total_order_cost_amount);
         Frame1.frame.remove(PlaceOrderPanels.place_order_panel_top);
         Frame1.frame.remove(PlaceOrderPanels.place_order_panel_bottom);
+        PlaceOrderPanels.Place_Order_Panels_is_visible = false;
         Frame1.frame.repaint();
     }
     public static void add_PlaceOrderPanels(){
@@ -101,6 +107,37 @@ public class AddandRemovePanels extends JPanel {
         Frame1.frame.add(PlaceOrderPanels.total_order_cost_amount);
         Frame1.frame.add(PlaceOrderPanels.place_order_panel_top);
         Frame1.frame.add(PlaceOrderPanels.place_order_panel_bottom);
+        PlaceOrderPanels.Place_Order_Panels_is_visible = true;
+        Frame1.frame.repaint();
+    }
+    public static void add_SalesOrderPanels(){
+        Frame1.frame.add(SalesOrderPanels.all_time_sales_label_name);
+        Frame1.frame.add(SalesOrderPanels.total_sales_today_label_name);
+        Frame1.frame.add(SalesOrderPanels.total_products_in_store_label_name);
+        Frame1.frame.add(SalesOrderPanels.total_sales_today_label);
+        Frame1.frame.add(SalesOrderPanels.all_time_sales_label);
+        Frame1.frame.add(SalesOrderPanels.total_products_in_store_label);
+        Frame1.frame.add(SalesOrderPanels.total_sales_today_panel);
+        Frame1.frame.add(SalesOrderPanels.all_time_sales_panel);
+        Frame1.frame.add(SalesOrderPanels.total_products_in_store_panel);
+        Frame1.frame.add(SalesOrderPanels.table);
+        Frame1.frame.add(SalesOrderPanels.sales_order_panel_main);
+        SalesOrderPanels.Sales_Order_Panels_is_visible = true;
+        Frame1.frame.repaint();
+    }
+    public static void remove_SalesOrderPanels(){
+        Frame1.frame.remove(SalesOrderPanels.all_time_sales_label_name);
+        Frame1.frame.remove(SalesOrderPanels.total_sales_today_label_name);
+        Frame1.frame.remove(SalesOrderPanels.total_products_in_store_label_name);
+        Frame1.frame.remove(SalesOrderPanels.total_sales_today_label);
+        Frame1.frame.remove(SalesOrderPanels.all_time_sales_label);
+        Frame1.frame.remove(SalesOrderPanels.total_products_in_store_label);
+        Frame1.frame.remove(SalesOrderPanels.total_sales_today_panel);
+        Frame1.frame.remove(SalesOrderPanels.all_time_sales_panel);
+        Frame1.frame.remove(SalesOrderPanels.total_products_in_store_panel);
+        Frame1.frame.remove(SalesOrderPanels.table);
+        Frame1.frame.remove(SalesOrderPanels.sales_order_panel_main);
+        SalesOrderPanels.Sales_Order_Panels_is_visible = false;
         Frame1.frame.repaint();
     }
 }

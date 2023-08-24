@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class Frame1 extends JFrame implements ActionListener {
     static JFrame frame = new JFrame();
@@ -24,6 +25,9 @@ public class Frame1 extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {}
 
     public void show_table_view() throws SQLException {
+        Panel1.Panel_is_visible = true;AddProductPanel.Add_Product_Panel_is_visible = false;
+        EditProductPanel.Edit_Product_Panel_is_visible = false; PlaceOrderPanels.Place_Order_Panels_is_visible = false;
+        SalesOrderPanels.Sales_Order_Panels_is_visible = false;
         Panel1 panel = new Panel1();
 
         add_product_label.setText("Add Product");
@@ -40,16 +44,20 @@ public class Frame1 extends JFrame implements ActionListener {
                 manage_customers_label.setForeground(Color.black);
 
                 // Remove all panels that might be on screen
-                AddandRemovePanels.remove_EditProductPanel();
-                AddandRemovePanels.remove_AddProductPanel();
-                AddandRemovePanels.remove_PlaceOrderPanels();
+                if (AddProductPanel.Add_Product_Panel_is_visible){AddandRemovePanels.remove_AddProductPanel();}
+                if (EditProductPanel.Edit_Product_Panel_is_visible){AddandRemovePanels.remove_EditProductPanel();}
+                if (PlaceOrderPanels.Place_Order_Panels_is_visible){AddandRemovePanels.remove_PlaceOrderPanels();}
+                if (SalesOrderPanels.Sales_Order_Panels_is_visible){AddandRemovePanels.remove_SalesOrderPanels();}
 
                 // Go back the previous state of Panel1
+                PlaceOrderPanels.clearOrderList();
                 Frame1.frame.add(Panel1.button);
                 Frame1.frame.add(Panel1.button1);
                 Frame1.frame.add(Panel1.button2);
                 Frame1.frame.add(Panel1.table);
                 Frame1.frame.add(Panel1.panel1);
+                Panel1.Panel_is_visible = true;
+
 
             }
             @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
@@ -61,36 +69,35 @@ public class Frame1 extends JFrame implements ActionListener {
         place_order_label.setIcon(icon1);
         place_order_label.addMouseListener(new MouseListener() {
             @Override public void mouseClicked(MouseEvent e) {
-                add_product_label.setForeground(Color.black);
-                place_order_label.setForeground(Color.blue);
-                sales_and_order_label.setForeground(Color.black);
-                manage_customers_label.setForeground(Color.black);
+                add_product_label.setForeground(Color.black);place_order_label.setForeground(Color.blue);sales_and_order_label.setForeground(Color.black);manage_customers_label.setForeground(Color.black);
 
                 // Remove all panels that might be on screen
-                AddandRemovePanels.remove_EditProductPanel();
-                AddandRemovePanels.remove_Panel1();
-                AddandRemovePanels.remove_AddProductPanel();
+                if (AddProductPanel.Add_Product_Panel_is_visible){AddandRemovePanels.remove_AddProductPanel();}
+                if (EditProductPanel.Edit_Product_Panel_is_visible){AddandRemovePanels.remove_EditProductPanel();}
+                if (Panel1.Panel_is_visible){AddandRemovePanels.remove_Panel1();}
+                if (SalesOrderPanels.Sales_Order_Panels_is_visible){AddandRemovePanels.remove_SalesOrderPanels();}
 
-                try {new PlaceOrderPanels();
-                } catch (SQLException ex) {throw new RuntimeException(ex);
-                }
+                try {new PlaceOrderPanels();} catch (SQLException ex) {throw new RuntimeException(ex);}
             }
-
-
             @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
         });
 
 
-
-        sales_and_order_label.setText("Sales & Order");
+        sales_and_order_label.setText("Sales & Orders");
         sales_and_order_label.setBounds(20,110,170,20);
         sales_and_order_label.setIcon(icon3);
         sales_and_order_label.addMouseListener(new MouseListener() {
             @Override public void mouseClicked(MouseEvent e) {
-                add_product_label.setForeground(Color.black);
-                place_order_label.setForeground(Color.black);
-                sales_and_order_label.setForeground(Color.blue);
-                manage_customers_label.setForeground(Color.black);}
+                add_product_label.setForeground(Color.black);place_order_label.setForeground(Color.black);sales_and_order_label.setForeground(Color.blue);manage_customers_label.setForeground(Color.black);
+
+                // Remove all panels that might be on screen
+                if (AddProductPanel.Add_Product_Panel_is_visible){AddandRemovePanels.remove_AddProductPanel();}
+                if (EditProductPanel.Edit_Product_Panel_is_visible){AddandRemovePanels.remove_EditProductPanel();}
+                if (PlaceOrderPanels.Place_Order_Panels_is_visible){AddandRemovePanels.remove_PlaceOrderPanels();}
+                if (Panel1.Panel_is_visible){AddandRemovePanels.remove_Panel1();}
+
+                try {PlaceOrderPanels.clearOrderList();new SalesOrderPanels();} catch (Exception ex) {throw new RuntimeException(ex);}
+            }
             @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
         });
 
@@ -102,7 +109,13 @@ public class Frame1 extends JFrame implements ActionListener {
                 add_product_label.setForeground(Color.black);
                 place_order_label.setForeground(Color.black);
                 sales_and_order_label.setForeground(Color.black);
-                manage_customers_label.setForeground(Color.blue);}
+                manage_customers_label.setForeground(Color.blue);
+
+                PlaceOrderPanels.clearOrderList();
+
+            }
+
+
             @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
         });
 

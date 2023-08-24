@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class EditProductPanel extends JPanel implements ActionListener {
-
+    static boolean Edit_Product_Panel_is_visible;
     static JPanel edit_product_panel = new JPanel();
     static JLabel product_name = new JLabel();
     static JLabel product_price = new JLabel();
@@ -20,6 +20,7 @@ public class EditProductPanel extends JPanel implements ActionListener {
     static JButton back_button = new JButton();
 
     EditProductPanel(){
+        Edit_Product_Panel_is_visible = true;
 
         edit_product_label.setText("Edit Product");
         edit_product_label.setBounds(410,30,200,40);
@@ -38,7 +39,7 @@ public class EditProductPanel extends JPanel implements ActionListener {
         product_quantity.setBounds(600,170,140,20);
         product_quantity.setForeground(Color.black);
 
-        edit_product_panel.setBounds(200,0,600,400); //200,0,600,400
+        edit_product_panel.setBounds(200,0,600,400);
         edit_product_panel.setBackground(Color.white);
 
         product_name_text.setBounds(390,120,170,28);

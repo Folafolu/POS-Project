@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 
 public class AddProductPanel extends JPanel implements ActionListener {
+    static boolean Add_Product_Panel_is_visible;
 
     static JPanel add_product_panel = new JPanel();
     static JLabel product_name = new JLabel();
@@ -19,6 +20,7 @@ public class AddProductPanel extends JPanel implements ActionListener {
 
     AddProductPanel(){
         show_AddProductPanel();
+        Add_Product_Panel_is_visible = true;
     }
 
 

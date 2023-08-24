@@ -1,7 +1,5 @@
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +7,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PlaceOrderPanels extends JPanel implements ActionListener {
+    static boolean Place_Order_Panels_is_visible;
     static JPanel place_order_panel_top = new JPanel();
     static JPanel place_order_panel_bottom = new JPanel();
     static JLabel product_name_label = new JLabel();
@@ -27,13 +25,15 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
     static JButton clear_order_list_button = new JButton();
     static JButton checkout_button = new JButton();
     static JLabel price_label  = new JLabel();
-    ArrayList order_history_array = new ArrayList<>();
+    static ArrayList order_history_array = new ArrayList<>();
     static JLabel total_order_cost_label = new JLabel();
     static JLabel total_order_cost_amount = new JLabel();
     static int order_list_buffer = 0;
-    String customers_name;
+    static String customers_name;
+    //static ActionListener clear_actionlistener;
     public PlaceOrderPanels() throws SQLException {
         show_place_order_panels();
+        Place_Order_Panels_is_visible = true;
     }
 
     @Override
@@ -88,9 +88,9 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
         //constantly update price based on combo box option and product quantity
         comboBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent ie) {
-                if (comboBox.getSelectedItem() == "Select") {
-                    price_label.setText("$0.00");
-                } else {
+               // if (comboBox.getSelectedItem() == "Select") {
+                   // price_label.setText("$0.00");
+                //} else {
                     // quantity can not be zero or null
                     if (product_quantity_textfield == null || product_quantity_textfield.getText() == "0") {
                         product_quantity_textfield.setText("1");
@@ -98,10 +98,12 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
                     for (int i = 0; i < Panel1.product_list.size(); i++) {
                         if (Panel1.product_list.get(i).getProduct_name() == comboBox.getSelectedItem()) {
                             price_label.setText("$" + Integer.toString(Panel1.product_list.get(i).getProduct_price() * Integer.parseInt(product_quantity_textfield.getText())));
-                        }}}}});
+                        }}}}
+    //}
+    );
 
         add_to_cart_button.setBounds(650,60,80,25);
-        add_to_cart_button.addActionListener(new ActionListener() {
+        ActionListener add_to_cart_actionlistener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // List of order history
@@ -119,14 +121,17 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
                     Frame1.frame.add(new JLabel(order_history_array.get(i+2).toString())).setBounds(470,160 + order_list_buffer,50,20);
 
                     AddandRemovePanels.add_PlaceOrderPanels();
-                    Frame1.frame.repaint();
+                    //Frame1.frame.repaint();
                     order_list_buffer += 20;
                 }
 
                 //Reset to add new product to cart
                 comboBox.setSelectedItem("Select");product_quantity_textfield.setText("1");price_label.setText("$0.00");
             }
-        });
+        };
+
+        add_to_cart_button.addActionListener(add_to_cart_actionlistener);
+
         add_to_cart_button.setText("+ Add To Cart ");add_to_cart_button.setFocusable(false);
         add_to_cart_button.setBackground(Color.black);
         add_to_cart_button.setFont(new Font(add_to_cart_button.getFont().getFontName(),Font.BOLD,10));
@@ -134,7 +139,8 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
         add_to_cart_button.setMargin(new Insets(0,0,0,0));
 
         clear_order_list_button.setBounds(600,310,50,25);
-        clear_order_list_button.addActionListener(new ActionListener() {
+
+        ActionListener clear_actionlistener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { // Remove all the items added to cart
                 Component[] components = Frame1.frame.getContentPane().getComponents();
@@ -151,10 +157,13 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
                     }
                 }
                 order_history_array.clear();
+                total_order_cost_amount.setText("0.00"); // Reset the total to zero
                 //AddandRemovePanels.remove_PlaceOrderPanels();
                 //AddandRemovePanels.add_PlaceOrderPanels();
             }
-        });
+        };
+        clear_order_list_button.addActionListener(clear_actionlistener);
+
         clear_order_list_button.setText("Clear");clear_order_list_button.setFocusable(false);
         clear_order_list_button.setBackground(Color.white);
         clear_order_list_button.setFont(new Font(clear_order_list_button.getFont().getFontName(),Font.BOLD,10));
@@ -197,5 +206,17 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
         }
         comboBox.addItem("Select");
         comboBox.setSelectedItem("Select");
+    }
+
+
+    public static void clearOrderList(){
+        if (order_history_array.size() > 0 ){
+            add_to_cart_button.removeActionListener(add_to_cart_button.getActionListeners()[0]);
+            clear_order_list_button.doClick(); // clear the order list when clicking out of the place order panel
+
+            if (customers_name == null){ // Check if the customer has checked out
+                total_order_cost_amount.setText("0.00");
+            }
+        }
     }
 }
