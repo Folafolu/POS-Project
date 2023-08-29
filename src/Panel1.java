@@ -144,7 +144,6 @@ public class Panel1 extends JPanel implements ActionListener {
         Frame1.frame.add(panel1);
 
 
-
     }
 
     public static void create_connection() throws SQLException {

@@ -11,6 +11,8 @@ public class Frame1 extends JFrame implements ActionListener {
     static JLabel sales_and_order_label = new JLabel();
     static JLabel manage_customers_label = new JLabel();
 
+    static MouseListener sales_and_order_mouselistener;
+
     ImageIcon icon1 =new ImageIcon( new ImageIcon("gear.png").getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
     ImageIcon icon2 =new ImageIcon( new ImageIcon("more.png").getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
     ImageIcon icon3 =new ImageIcon( new ImageIcon("package-box.png").getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
@@ -86,6 +88,23 @@ public class Frame1 extends JFrame implements ActionListener {
         sales_and_order_label.setText("Sales & Orders");
         sales_and_order_label.setBounds(20,110,170,20);
         sales_and_order_label.setIcon(icon3);
+
+//        sales_and_order_mouselistener = new MouseListener() {
+//            @Override public void mouseClicked(MouseEvent e) {
+//                add_product_label.setForeground(Color.black);place_order_label.setForeground(Color.black);sales_and_order_label.setForeground(Color.blue);manage_customers_label.setForeground(Color.black);
+//
+//                // Remove all panels that might be on screen
+//                if (AddProductPanel.Add_Product_Panel_is_visible){AddandRemovePanels.remove_AddProductPanel();}
+//                if (EditProductPanel.Edit_Product_Panel_is_visible){AddandRemovePanels.remove_EditProductPanel();}
+//                if (PlaceOrderPanels.Place_Order_Panels_is_visible){AddandRemovePanels.remove_PlaceOrderPanels();}
+//                if (Panel1.Panel_is_visible){AddandRemovePanels.remove_Panel1();}
+//
+//                try {PlaceOrderPanels.clearOrderList();new SalesOrderPanels();} catch (Exception ex) {throw new RuntimeException(ex);}
+//            }
+//            @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
+//        };
+//        sales_and_order_label.addMouseListener(sales_and_order_mouselistener);
+
         sales_and_order_label.addMouseListener(new MouseListener() {
             @Override public void mouseClicked(MouseEvent e) {
                 add_product_label.setForeground(Color.black);place_order_label.setForeground(Color.black);sales_and_order_label.setForeground(Color.blue);manage_customers_label.setForeground(Color.black);
@@ -97,6 +116,7 @@ public class Frame1 extends JFrame implements ActionListener {
                 if (Panel1.Panel_is_visible){AddandRemovePanels.remove_Panel1();}
 
                 try {PlaceOrderPanels.clearOrderList();new SalesOrderPanels();} catch (Exception ex) {throw new RuntimeException(ex);}
+
             }
             @Override public void mousePressed(MouseEvent e) {}@Override public void mouseReleased(MouseEvent e) {}@Override public void mouseEntered(MouseEvent e) {}@Override public void mouseExited(MouseEvent e) {}
         });

@@ -1,14 +1,19 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.sql.SQLException;
+import java.awt.event.*;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class PlaceOrderPanels extends JPanel implements ActionListener {
+    static Connection connection;
+    static Statement statement;
+    static ResultSet resultSet;
     static boolean Place_Order_Panels_is_visible;
     static JPanel place_order_panel_top = new JPanel();
     static JPanel place_order_panel_bottom = new JPanel();
@@ -114,6 +119,7 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
                 total_order_cost_amount.setText(Float.toString(Float.parseFloat(total_order_cost_amount.getText()) + Float.parseFloat(price_label.getText().substring(1))));
 
                 // print out the order list added to cart
+
                 for (int i = 0; i< order_history_array.size(); i+=3){
                     AddandRemovePanels.remove_PlaceOrderPanels();
                     Frame1.frame.add(new JLabel(order_history_array.get(i).toString())).setBounds(220,160 + order_list_buffer,130,20);
@@ -127,10 +133,14 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
 
                 //Reset to add new product to cart
                 comboBox.setSelectedItem("Select");product_quantity_textfield.setText("1");price_label.setText("$0.00");
+
+
             }
         };
 
-        add_to_cart_button.addActionListener(add_to_cart_actionlistener);
+        if(add_to_cart_button.getActionListeners().length == 0){ // only add action listener once
+            add_to_cart_button.addActionListener(add_to_cart_actionlistener);
+        }
 
         add_to_cart_button.setText("+ Add To Cart ");add_to_cart_button.setFocusable(false);
         add_to_cart_button.setBackground(Color.black);
@@ -162,7 +172,9 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
                 //AddandRemovePanels.add_PlaceOrderPanels();
             }
         };
-        clear_order_list_button.addActionListener(clear_actionlistener);
+        if (clear_order_list_button.getActionListeners().length == 0){ // only add action listener once
+            clear_order_list_button.addActionListener(clear_actionlistener);
+        }
 
         clear_order_list_button.setText("Clear");clear_order_list_button.setFocusable(false);
         clear_order_list_button.setBackground(Color.white);
@@ -171,12 +183,41 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
         clear_order_list_button.setMargin(new Insets(0,0,0,0));
 
         checkout_button.setBounds(660,310,70,25);
-        checkout_button.addActionListener(new ActionListener() {
+
+        ActionListener checkout_actionlistener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                customers_name = JOptionPane.showInputDialog(null,"Enter First & Last name to submit your order","Checkout", JOptionPane.OK_OPTION);
+                customers_name = JOptionPane.showInputDialog(null,"Enter your Name: ");
+                try {
+                    create_connection();
+                    // create the AM/PM time format using dateformat
+                    DateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+                    String dateString = dateFormat.format(new Date()).toString();
+
+                    // insert into orders table
+                    String add_sql_query = "INSERT INTO orders VALUES (1,"  + "'"+java.time.LocalDate.now()+"'"  + "," + "'"+customers_name +"'"  + "," + Float.parseFloat(total_order_cost_amount.getText()) + "," + "'" +dateString + "'" + ")";
+                    PlaceOrderPanels.statement.execute(add_sql_query);
+
+                    String setUserVariable = "SET @autoid :=0;";
+                    PlaceOrderPanels.statement.executeUpdate(setUserVariable);
+                    String updateOrderssTable = "UPDATE orders set Order_id = @autoid := (@autoid+1);";
+                    PlaceOrderPanels.statement.executeUpdate(updateOrderssTable);
+                    String resetAutoIncrement = "ALTER table orders AUTO_INCREMENT = 1;";
+                    PlaceOrderPanels.statement.executeUpdate(resetAutoIncrement);
+
+                    Frame1.sales_and_order_label.dispatchEvent(new MouseEvent(Frame1.sales_and_order_label,MouseEvent.MOUSE_CLICKED,System.currentTimeMillis(),0,0,0,1,false));
+                    JOptionPane.showMessageDialog(null,customers_name + ", Your Order has been placed","Order Complete", JOptionPane.PLAIN_MESSAGE);
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
-        });
+        };
+
+        if (checkout_button.getActionListeners().length == 0){ // only add action listener once
+            checkout_button.addActionListener(checkout_actionlistener);
+        }
+
         checkout_button.setText("Checkout");checkout_button.setFocusable(false);
         checkout_button.setBackground(new Color(0,49,113));
         checkout_button.setFont(new Font(checkout_button.getFont().getFontName(),Font.BOLD,10));
@@ -218,5 +259,15 @@ public class PlaceOrderPanels extends JPanel implements ActionListener {
                 total_order_cost_amount.setText("0.00");
             }
         }
+    }
+
+    public static void create_connection() throws SQLException {
+        String jdbcURL = "jdbc:mysql://localhost:3306/db_sql_tutorial";
+        String username = "fola";
+        String password = "fola";
+        connection = DriverManager.getConnection(jdbcURL,username,password);
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery("SELECT * FROM orders");
+
     }
 }
