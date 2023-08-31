@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.sql.*;
 import java.text.DateFormat;
@@ -70,6 +71,7 @@ public class SalesOrderPanels extends JPanel {
 
         table = new JTable(model);
 
+
         if (model.getColumnCount() == 0){ // add columns once
             model.addColumn("Col1");
             model.addColumn("Col2");
@@ -77,14 +79,24 @@ public class SalesOrderPanels extends JPanel {
             model.addColumn("Col4");
             model.addColumn("Col5");
             model.addRow(order_column_headers);
-
-            //table.getColumnModel().getColumn(0).setPreferredWidth(50);
         }
 
-        table.setBounds(220,140, 700, 400);
+        table.getColumnModel().getColumn(1).setWidth(100);
+        table.getColumnModel().getColumn(2).setWidth(150);
+        table.getColumnModel().getColumn(3).setWidth(100);
+        table.getColumnModel().getColumn(4).setWidth(100);
+
+        table.setBounds(220,140, 600, 300);
         table.setEnabled(false);
         table.setRowSelectionAllowed(false);
 
+        create_connection();
+        String setUserVariable = "SET @autoid :=0;";
+        statement.executeUpdate(setUserVariable);
+        String updateProductsTable = "UPDATE orders set Order_id = @autoid := (@autoid+1);";
+        statement.executeUpdate(updateProductsTable);
+        String resetAutoIncrement = "ALTER table orders AUTO_INCREMENT = 1;";
+        statement.executeUpdate(resetAutoIncrement);
         display_orders();
 
         Frame1.frame.add(all_time_sales_label_name);Frame1.frame.add(total_sales_today_label_name);Frame1.frame.add(total_products_in_store_label_name);
@@ -103,7 +115,8 @@ public class SalesOrderPanels extends JPanel {
         String password = "fola";
         connection = DriverManager.getConnection(jdbcURL,username,password);
         statement = connection.createStatement();
-        resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY Order_time DESC");
+        resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY Order_date DESC, Order_time DESC");
+
 
     }
     public static ArrayList<Order> order_list() throws SQLException {

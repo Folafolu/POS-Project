@@ -135,6 +135,7 @@ public class Panel1 extends JPanel implements ActionListener {
         table.setEnabled(false);
         table.setRowSelectionAllowed(false);
 
+
         display_products();
 
         Frame1.frame.add(button);

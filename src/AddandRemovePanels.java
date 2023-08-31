@@ -140,4 +140,22 @@ public class AddandRemovePanels extends JPanel {
         SalesOrderPanels.Sales_Order_Panels_is_visible = false;
         Frame1.frame.repaint();
     }
+
+    public static void add_CustomersPanel(){
+        Frame1.frame.add(CustomersPanel.customer_list_label);
+        Frame1.frame.add(CustomersPanel.table);
+        Frame1.frame.add(CustomersPanel.customers_panel);
+        CustomersPanel.Customers_Panel_is_visible = true;
+        Frame1.frame.repaint();
+    }
+
+    public static void remove_CustomersPanel(){
+        Frame1.frame.remove(CustomersPanel.customer_list_label);
+        Frame1.frame.remove(CustomersPanel.table);
+        Frame1.frame.remove(CustomersPanel.customers_panel);
+        CustomersPanel.Customers_Panel_is_visible = false;
+        Frame1.frame.repaint();
+    }
+
+
 }
